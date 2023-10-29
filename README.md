@@ -1,5 +1,5 @@
 ### Machine Learning using SAM
-'''  
+```  
 sam init --name sam-app-image --package-type Image --architecture x86_64
 Which template source would you like to use?
         1 - AWS Quick Start Templates
@@ -51,4 +51,4 @@ Commands you can use next
 [*] Create pipeline: cd sam-app-image && sam pipeline init --bootstrap
 [*] Validate SAM template: cd sam-app-image && sam validate
 [*] Test Function in the Cloud: cd sam-app-image && sam sync --stack-name {stack-name} --watch
-'''
+```
