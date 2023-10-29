@@ -51,4 +51,5 @@ Commands you can use next
 [*] Create pipeline: cd sam-app-image && sam pipeline init --bootstrap
 [*] Validate SAM template: cd sam-app-image && sam validate
 [*] Test Function in the Cloud: cd sam-app-image && sam sync --stack-name {stack-name} --watch
-```
+```  
+- app.py requirements.txt 등 수정
