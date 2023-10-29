@@ -52,4 +52,53 @@ Commands you can use next
 [*] Validate SAM template: cd sam-app-image && sam validate
 [*] Test Function in the Cloud: cd sam-app-image && sam sync --stack-name {stack-name} --watch
 ```  
-- app.py requirements.txt 등 수정
+1. cd sam-app-image  
+2. app/app.py, app/Dockerfile, app/requirements.txt, events/event.json 등 필요 파일 수정   
+3. local test  
+```  
+(mlops)  ✘  ~/playground/mlops/aws-sam/sam-app-image  ↱ main ±
+❯ sam local invoke "InferenceFunction" -e events/event.json
+Invoking Container created from inferencefunction:python3.11-v1
+Building image.................
+Using local image: inferencefunction:rapid-x86_64.
+
+START RequestId: a391c533-87a2-4563-9f2e-54be23e0c86b Version: $LATEST
+2023-10-29 13:31:54.997518: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-10-29 13:31:55.121245: E tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:9342] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2023-10-29 13:31:55.121335: E tensorflow/compiler/xla/stream_executor/cuda/cuda_fft.cc:609] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2023-10-29 13:31:55.121372: E tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:1518] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2023-10-29 13:31:55.144634: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-10-29 13:31:55.145204: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-10-29 13:31:56.620821: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+END RequestId: a391c533-87a2-4563-9f2e-54be23e0c86b
+REPORT RequestId: a391c533-87a2-4563-9f2e-54be23e0c86b  Init Duration: 0.41 ms  Duration: 4580.73 ms    Billed Duration: 4581 ms        Memory Size: 5000 MBMax Memory Used: 5000 MB
+{"statusCode": 200, "body": "{\"message\": \"MPG: [8.184905052185059]\"}"}
+```  
+4. container test
+```  
+❯ sam local invoke
+Invoking Container created from inferencefunction:python3.11-v1
+Building image.................
+Using local image: inferencefunction:rapid-x86_64.
+
+START RequestId: c94da49a-7a7f-4d72-9852-bfe279bf68c4 Version: $LATEST
+2023-10-29 13:34:49.086622: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-10-29 13:34:49.149790: E tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:9342] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2023-10-29 13:34:49.149884: E tensorflow/compiler/xla/stream_executor/cuda/cuda_fft.cc:609] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2023-10-29 13:34:49.149932: E tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:1518] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2023-10-29 13:34:49.158897: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-10-29 13:34:49.159294: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-10-29 13:34:50.504960: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+END RequestId: c94da49a-7a7f-4d72-9852-bfe279bf68c4
+REPORT RequestId: c94da49a-7a7f-4d72-9852-bfe279bf68c4  Init Duration: 0.29 ms  Duration: 3059.74 ms    Billed Duration: 3060 ms        Memory Size: 5000 MBMax Memory Used: 5000 MB
+{"statusCode": 200, "body": "{\"message\": \"Incorrect event. event: {}\"}"}
+```  
+
+5. deploy  
+```
+
+```  
+
+6. api gate url을 사용하여 요청
